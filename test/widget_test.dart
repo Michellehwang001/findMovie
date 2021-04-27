@@ -5,26 +5,22 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:flutter/material.dart';
+import 'package:find_movie/widget/movie.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:find_movie/main.dart';
+import 'dart:convert';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(FindMovie());
+  test('http 통신 테스트', () async {
+    var uri = Uri.parse(
+        'https://api.themoviedb.org/3/movie/upcoming?api_key=a64533e7ece6c72731da47c9c8bc691f&language=ko-KR&page=1');
+    var response = await http.get(uri);
+    expect(response.statusCode, 200);
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    Movie movie = Movie.fromJson(json.decode(response.body));
+    expect(movie.results[0].id, 460465);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+   // Subway sub = Subway.fromJson(json.decode(response.body));
+    // expect(sub.realtimeArrivalList[0].statnNm, '대야미');
   });
 }
