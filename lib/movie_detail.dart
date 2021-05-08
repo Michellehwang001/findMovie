@@ -1,11 +1,10 @@
-import 'package:find_movie/widget/results.dart';
+import 'package:find_movie/widget/movie.dart';
 import 'package:flutter/material.dart';
 
 class MovieDetail extends StatelessWidget {
-  Results result = Results();
-  final ScrollController _controller = ScrollController();
+  Movie result = Movie();
 
-  final items = List.generate(50, (i) => i).toList();
+  //final items = List.generate(50, (i) => i).toList();
 
   MovieDetail(this.result);
 
